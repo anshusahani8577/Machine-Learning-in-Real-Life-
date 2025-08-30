@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import joblib
-
+import time
 # Load model, scaler, and expected columns
 model = joblib.load("knn_heart_model.pkl")
 scaler = joblib.load("heart_scaler.pkl")
@@ -21,12 +21,14 @@ def set_background(color_hex):
     )
 
 # Set initial background color (neutral orange)
-set_background("#000000")
+set_background("#0F4C5C")
 
 # App Title
-st.title("💓 Heart Stroke Prediction By Ansh")
+st.title(" Heart Stroke Prediction ! ")
+st.subheader(" Please Check Now Your Heart Stroke Risk !! ")
+st.subheader(" Read All The Instructions Carefully Before Check !!! ")    
 
-st.markdown("Please fill in the details below to assess your heart stroke risk.")
+
 
 # 📘 Educational Section
 with st.expander("📘 Know the Medical Terms (Click to Expand)"):
@@ -73,6 +75,7 @@ with st.expander("📘 Know the Medical Terms (Click to Expand)"):
         - **Flat:** Mild abnormality  
         - **Down:** Serious concern
     """)
+st.markdown("Please fill in the details below to assess your heart stroke risk.")
 
 # Collect user input
 age = st.slider("Age", 18, 100, 40)
@@ -122,13 +125,18 @@ if st.button("🔍 Predict"):
     # Predict
     prediction = model.predict(scaled_input)[0]
 
+    with st.spinner('Thinking.....(ruk jaoo bhai thoda )'):
+     time.sleep(3)
+
     # Display result and change background
     if prediction == 1:
         set_background("#000000")  # Red
         st.error("⚠️ High Risk of Heart Disease")
+        
     else:
         set_background("#000000")  # Green
         st.success("✅ Low Risk of Heart Disease")
+      
 
 # 📜 Terms and Conditions
 with st.expander("📄 Terms and Conditions"):
@@ -138,3 +146,6 @@ with st.expander("📄 Terms and Conditions"):
     - Prediction results are based on historical data and may not be accurate for all individuals.
     - Always consult a certified healthcare provider for health-related decisions.
     """)
+
+# Footer 
+st.markdown("Designed by **Anshu**")
